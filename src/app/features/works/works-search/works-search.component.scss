@@ -1,0 +1,7 @@
+.search-field {
+    width: 25%;
+
+    @media screen and (max-width: 992px) {
+        width: 50%;
+    }
+}

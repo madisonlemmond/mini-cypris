@@ -1,0 +1,8 @@
+<div class="content-container">
+    <h2>Welcome</h2>
+    <p>Welcome to your Dashboard! Use the field below to search for research papers by keywords.</p>
+    <app-search (response)="onResponse($event)" (loading)="setWorksSearchLoading($event)"></app-search>
+    <div *ngIf="worksSearchResponse" class="search-results-container">
+        <app-works-card *ngFor="let work of worksSearchResponse.results" [work]="work"></app-works-card>
+    </div>
+</div>

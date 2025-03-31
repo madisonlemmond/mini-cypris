@@ -1,0 +1,40 @@
+import { Author } from "./author.model";
+import { DataProvider } from "./data-provider.model";
+import { Identifier } from "./identifier.model";
+import { Journal } from "./journal.model";
+import { Language } from "./language.model";
+import { Link } from "./link.model";
+import { Reference } from "./reference.model";
+
+export interface WorksSearchResults {
+    acceptedDate: Date;
+    authors: Author[];
+    citationCount: number;
+    contributors: string[];
+    outputs: string[];
+    createdDate: Date;
+    dataProviders: DataProvider[];
+    depositedDate: Date;
+    abstract: string;
+    documentType: string;
+    doi: string;
+    oai: string;
+    downloadUrl: string;
+    fullText: string;
+    id: number;
+    identifiers: Identifier[];
+    title: string;
+    language: Language;
+    magId: string;
+    oaiIds: string[];
+    publishedDate: Date;
+    publisher: string;
+    pubmedId: string;
+    references: Reference[];
+    sourceFulltextUrls: string[];
+    updatedDate: Date;
+    yearPublished: string;
+    journals: Journal[];
+    links: Link[];
+    fieldOfStudy: string;
+}

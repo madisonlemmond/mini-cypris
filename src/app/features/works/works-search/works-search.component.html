@@ -1,0 +1,9 @@
+<form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+  <div class="flex align-items-center">
+    <div class="p-input-icon-left p-mr-2 search-field">
+      <i class="pi pi-search"></i>
+      <input type="text" formControlName="search" pInputText style="width: 100%;" class="p-inputtext-sm" placeholder="Search papers..." />
+    </div>
+    <p-button type="submit" class="ml-4" label="Search"></p-button>
+  </div>
+</form>

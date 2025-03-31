@@ -1,0 +1,16 @@
+<div style="margin: 1rem 0;">
+    <p-card header="{{ work.title }}">
+        <ng-container *ngFor="let workDetail of workDetailCardProperties">
+            <div *ngIf="work[workDetail.property]" class="work-detail">
+                <div class="label">
+                    <i *ngIf="workDetail.icon" class="{{ workDetail.icon }} label-icon"></i>
+                    <p><strong>{{ workDetail.label }}:</strong> </p>
+                </div>
+                <div class="detail" [ngSwitch]="workDetail.type">
+                    <p-tag *ngSwitchCase="'tag'" [value]="work[workDetail.property].toString()" [rounded]="true" severity="info"></p-tag>
+                    <p *ngSwitchDefault>{{ workDetail.format ?  workDetail.format(work[workDetail.property]) : work[workDetail.property] }}</p>
+                </div>
+            </div>
+        </ng-container>
+    </p-card>
+</div>
