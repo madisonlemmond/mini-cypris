@@ -9,7 +9,7 @@ import { CardModule } from 'primeng/card';
 import { WorksCardComponent } from './works-card/works-card.component';
 import { PaginatorModule } from 'primeng/paginator';
 import { TagModule } from 'primeng/tag';
-
+import { AdvancedSearchComponent } from '../advanced-search/advanced-search.component';
 
 @NgModule({
   declarations: [WorksSearchComponent, WorksCardComponent],
@@ -22,8 +22,8 @@ import { TagModule } from 'primeng/tag';
     CardModule,
     PaginatorModule,
     TagModule,
+    AdvancedSearchComponent,
   ],
-  exports: [WorksSearchComponent, WorksCardComponent]
+  exports: [WorksSearchComponent, WorksCardComponent],
 })
-export class WorksModule { }
-
+export class WorksModule {}

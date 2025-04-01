@@ -1,8 +1,45 @@
 <div class="content-container">
-    <h2>Welcome</h2>
-    <p>Welcome to your Dashboard! Use the field below to search for research papers by keywords.</p>
-    <app-search (response)="onResponse($event)" (loading)="setWorksSearchLoading($event)"></app-search>
-    <div *ngIf="worksSearchResponse" class="search-results-container">
-        <app-works-card *ngFor="let work of worksSearchResponse.results" [work]="work"></app-works-card>
+  <h2>Welcome</h2>
+  <p>
+    Welcome to your Dashboard! Use the field below to search for research papers
+    by keywords
+  </p>
+  <p>
+    To get more precise results, use the Advanced Search and create specific
+    rules for keywords.
+  </p>
+
+  <div class="w-9">
+    <app-works-search
+      (response)="onResponse($event)"
+      (loading)="setWorksSearchLoading($event)"
+    ></app-works-search>
+  </div>
+
+  <div class="flex gap-4">
+    <div class="advanced-search-container mt-4">
+      <app-works-advanced-search
+        (response)="onResponse($event)"
+        (loading)="setWorksSearchLoading($event)"
+      ></app-works-advanced-search>
     </div>
+    <div class="search-results-container">
+      <p-progressSpinner
+        *ngIf="worksSearchLoading"
+        strokeWidth="6"
+        [style]="{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)'
+        }"
+      ></p-progressSpinner>
+      <div *ngIf="worksSearchResponse">
+        <app-works-card
+          *ngFor="let work of worksSearchResponse.results"
+          [work]="work"
+        ></app-works-card>
+      </div>
+    </div>
+  </div>
 </div>

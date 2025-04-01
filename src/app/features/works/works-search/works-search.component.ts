@@ -4,7 +4,7 @@ import { WorksSearchService } from './works-search.service';
 import { WorksSearchResponse } from './models/response/works-search-response.model';
 
 @Component({
-  selector: 'app-search',
+  selector: 'app-works-search',
   templateUrl: './works-search.component.html',
   styleUrls: ['./works-search.component.scss']
 })

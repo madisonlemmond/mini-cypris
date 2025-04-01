@@ -1,30 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
-@import 'primeicons/primeicons.css';
-@import 'primeflex/primeflex.css';
-@import '@fontsource/open-sans';
+@import "primeicons/primeicons.css";
+@import "primeflex/primeflex.css";
+@import "@fontsource/open-sans";
 
 body {
-    font-family: 'Open Sans', sans-serif;
-    color: var(--surface-700);
-    background-color: white;
+  font-family: "Open Sans", sans-serif;
+  color: var(--surface-700);
 
-    .p-component {
-        font-family: 'Open Sans', sans-serif;
-        font-size: small;
-    }
+  .p-component {
+    font-family: "Open Sans", sans-serif;
+    font-size: small;
+  }
 
-    .p-button {
-        font-size: small;
-        padding: 0.5rem 1rem;
-    }
+  .p-button {
+    font-size: small;
+    padding: 0.5rem 1rem;
+  }
 
-    .p-inputtext {
-        font-size: small;
-        padding: 0.5rem 0.5rem;
-    }
-    .p-input-icon-left > .p-inputtext {
-        padding-left: 2.5rem;
-    }
+  .p-inputtext {
+    font-size: small;
+    padding: 0.5rem 0.5rem;
+  }
+  .p-input-icon-left > .p-inputtext {
+    padding-left: 2.5rem;
+  }
+
+  .p-panel .p-panel-header {
+    font-weight: bolder;
+    padding: 0.5rem 0.5rem;
+  }
+
+  .p-fieldset .p-fieldset-legend {
+    border: 0 none;
+    padding: 0;
+  }
+
+  .p-fieldset .p-fieldset-content {
+    padding: 0.75rem 0.75rem;
+  }
 }
