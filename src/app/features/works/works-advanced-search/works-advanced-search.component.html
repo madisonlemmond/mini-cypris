@@ -1,3 +1,5 @@
 <app-advanced-search
+  [showDialog]="showDialog"
+  (dialogClosed)="onDialogClose()"
   (advancedSearch)="onAdvancedSearch($event)"
 ></app-advanced-search>

@@ -4,6 +4,6 @@ export interface WorksSearchResponse {
     totalHits: number;
     limit: number;
     offset: number;
-    searchId: number;
+    searchId: string;
     results: WorksSearchResults[];
 }

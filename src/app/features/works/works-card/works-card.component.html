@@ -1,5 +1,14 @@
 <div style="margin: 1rem 0;">
-    <p-card header="{{ work.title }}">
+    <p-card>
+        <ng-template pTemplate="header">
+            <div class="e pl-4 pt-4 pr-4">
+                <span class=" font-bold text-xl">{{ work.title }}</span>
+                <a href="{{ work.downloadUrl }}" target="_blank">
+                    <i class="pi pi-link ml-1" style="font-size: 1.5em; color: #007bff;"></i>
+                </a>
+            </div>
+        </ng-template>
+        <p-divider />
         <ng-container *ngFor="let workDetail of workDetailCardProperties">
             <div *ngIf="work[workDetail.property]" class="work-detail">
                 <div class="label">
@@ -7,8 +16,25 @@
                     <p><strong>{{ workDetail.label }}:</strong> </p>
                 </div>
                 <div class="detail" [ngSwitch]="workDetail.type">
-                    <p-tag *ngSwitchCase="'tag'" [value]="work[workDetail.property].toString()" [rounded]="true" severity="info"></p-tag>
-                    <p *ngSwitchDefault>{{ workDetail.format ?  workDetail.format(work[workDetail.property]) : work[workDetail.property] }}</p>
+                    <p-tag *ngSwitchCase="'tag'" [value]="work[workDetail.property].toString()" [rounded]="true"
+                        severity="info"></p-tag>
+                    <p *ngSwitchDefault>
+                        <ng-container *ngIf="workDetail.property === 'abstract'; else defaultContent">
+                            <div>
+                                {{ isAbstractExpanded ? work.abstract : (work.abstract | slice:0:200) + '...' }}
+                                <div class="mt-2">
+                                    <p-button *ngIf="work.abstract.length > 200" class="mt-2"
+                                        (click)="toggleAbstract()">
+                                        {{ isAbstractExpanded ? 'Read Less' : 'Read More' }}
+                                    </p-button>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-template #defaultContent>
+                            {{ workDetail.format ? workDetail.format(work[workDetail.property]) :
+                            work[workDetail.property] }}
+                        </ng-template>
+                    </p>
                 </div>
             </div>
         </ng-container>

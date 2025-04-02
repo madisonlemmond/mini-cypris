@@ -12,6 +12,7 @@ import { formatDate } from '@angular/common';
 export class WorksCardComponent {
 
   @Input() work!: WorkDetail
+  isAbstractExpanded: boolean = false;
 
   workDetailCardProperties: WorkDetailCardProperty[]  = [
     {
@@ -51,6 +52,14 @@ export class WorksCardComponent {
       label: 'Abstract',
       type: 'text',
       icon: 'pi pi-book',
-    }
-  ]
+    },
+  ];
+
+  toggleAbstract(): void {
+    this.isAbstractExpanded = !this.isAbstractExpanded; // Toggle the expanded state
+  }
+
+  goToLink(url: string) {
+    window.open(url, '_blank');
+  }
 }

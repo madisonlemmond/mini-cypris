@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FieldsetModule } from 'primeng/fieldset';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -15,6 +15,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TagModule } from 'primeng/tag';
 import { CardModule } from 'primeng/card';
 import { TooltipModule } from 'primeng/tooltip';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-advanced-search',
@@ -30,12 +31,15 @@ import { TooltipModule } from 'primeng/tooltip';
     TagModule,
     CardModule,
     TooltipModule,
+    DialogModule,
   ],
   templateUrl: './advanced-search.component.html',
   styleUrl: './advanced-search.component.scss',
 })
 export class AdvancedSearchComponent {
+  @Input() showDialog: boolean = false;
   @Output() advancedSearch: EventEmitter<string> = new EventEmitter<string>();
+  @Output() dialogClosed: EventEmitter<void> = new EventEmitter<void>();
 
   logicalOperators = [
     {
@@ -47,15 +51,20 @@ export class AdvancedSearchComponent {
       label: 'Any',
     },
   ];
-  advancedSearchForm: FormGroup;
+  advancedSearchForm!: FormGroup;
 
   constructor(private fb: FormBuilder) {
-    this.advancedSearchForm = this.fb.group({
-      searchGroups: this.fb.array([]),
-    });
+
   }
 
   ngOnInit() {
+    this.initializeForm();
+  }
+
+  initializeForm() {
+    this.advancedSearchForm = this.fb.group({
+      searchGroups: this.fb.array([]),
+    });
     this.addSearchGroup();
   }
 
@@ -120,6 +129,7 @@ export class AdvancedSearchComponent {
 
   onSubmit() {
     const query = this.buildSearchQueryString(this.advancedSearchForm.value);
+    this.showDialog = false;
     this.advancedSearch.emit(query);
   }
 
@@ -151,5 +161,10 @@ export class AdvancedSearchComponent {
       queryString += groupString;
     }
     return queryString;
+  }
+
+  onDialogClosed() {
+    this.initializeForm();
+    this.dialogClosed.emit();
   }
 }

@@ -8,19 +8,20 @@
 body {
   font-family: "Open Sans", sans-serif;
   color: var(--surface-700);
-
+  background-color: #f8f9fa;
   .p-component {
     font-family: "Open Sans", sans-serif;
-    font-size: small;
+  }
+
+  .p-card .p-card-body {
+    padding-top: 0;
   }
 
   .p-button {
-    font-size: small;
     padding: 0.5rem 1rem;
   }
 
   .p-inputtext {
-    font-size: small;
     padding: 0.5rem 0.5rem;
   }
   .p-input-icon-left > .p-inputtext {

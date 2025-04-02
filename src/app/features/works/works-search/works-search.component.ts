@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { WorksSearchService } from './works-search.service';
 import { WorksSearchResponse } from './models/response/works-search-response.model';
+import { WorksSearchResults } from './models/response/works-search-results.model';
 
 @Component({
   selector: 'app-works-search',
@@ -11,18 +12,29 @@ import { WorksSearchResponse } from './models/response/works-search-response.mod
 export class WorksSearchComponent {
   @Output() response: EventEmitter<WorksSearchResponse> = new EventEmitter<WorksSearchResponse>();
   @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>();
-
+  
+  openAdvancedSearchDialog: boolean = false
   searchForm: FormGroup;
+  resultCountOptions: number[] = [10, 25, 50, 100];
+  results: WorksSearchResults[] = [];
+  totalHits: number = 0;
 
-  constructor(private worksSearchService: WorksSearchService) {
-    this.searchForm = new FormGroup({
-      search: new FormControl(''),
+  constructor(private fb: FormBuilder, private worksSearchService: WorksSearchService) {
+    this.searchForm = this.fb.group({
+      search: [''],
+      resultCount: [null],
     })
+  }
+
+  onAdvancedSearch(advancedSearch: string) {
+    this.searchForm.get('search')?.setValue(advancedSearch);
+    this.onSubmit();
   }
 
   onSubmit() {
     this.loading.emit(true);
-    this.worksSearchService.searchWorks(this.searchForm.get('search')?.value).subscribe({
+
+    this.worksSearchService.searchWorks(this.searchForm.get('search')?.value, this.searchForm.get('resultCount')?.value).subscribe({
       next: response => {
         this.response.emit(response);
         this.loading.emit(false);
@@ -33,5 +45,13 @@ export class WorksSearchComponent {
         throw new Error('An error occured, please try searching again.')
       }
     })
+  }
+
+  openAdvancedSearch() {
+    this.openAdvancedSearchDialog = true;
+  }
+
+  onDialogClosed() {
+    this.openAdvancedSearchDialog = false;
   }
 }

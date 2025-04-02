@@ -1,117 +1,60 @@
-<div class="search-form">
-  <p-panel header="Advanced Search" toggleable="true" [collapsed]="true">
-    <form [formGroup]="advancedSearchForm" (ngSubmit)="onSubmit()">
-      <div formArrayName="searchGroups">
-        <div
-          *ngFor="let searchGroup of searchGroups.controls; let i = index"
-          [formGroupName]="i"
-          class="search-group mb-1"
-        >
-          <p-fieldset>
-            <div class="flex justify-content-between align-items-center mb-2">
-              <div>
-                <p-dropdown
-                  formControlName="logicalOperator"
-                  [options]="logicalOperators"
-                  optionLabel="label"
-                  optionValue="value"
-                >
-                </p-dropdown>
-                <span class="white-space-nowrap">
-                  of the following keywords:</span
-                >
-              </div>
-              <div>
-                <p-button
-                  icon="pi pi-times"
-                  pTooltip="Remove search group"
-                  tooltipPosition="top"
-                  rounded="true"
-                  text="true"
-                  (click)="removeSearchGroup(i)"
-                  severity="danger"
-                  [disabled]="searchGroups.length === 1"
-                />
-              </div>
+<p-dialog [modal]="true" [(visible)]="showDialog" (onHide)="onDialogClosed()" class="advanced-search-dialog"
+  [breakpoints]="{'960px': '90%'}" [style]="{'width': '50%'}" header="Advanced Search">
+  <form [formGroup]="advancedSearchForm" (ngSubmit)="onSubmit()">
+    <div formArrayName="searchGroups">
+      <div *ngFor="let searchGroup of searchGroups.controls; let i = index" [formGroupName]="i"
+        class="search-group mb-1">
+        <p-fieldset>
+          <div class="flex justify-content-between align-items-center mb-2">
+            <div>
+              <p-dropdown formControlName="logicalOperator" [options]="logicalOperators" optionLabel="label"
+                optionValue="value">
+              </p-dropdown>
+              <span class="font-bold">
+                of these keywords:</span>
             </div>
+            <div>
+              <p-button icon="pi pi-times" pTooltip="Remove search group" tooltipPosition="top" rounded="true"
+                text="true" (click)="removeSearchGroup(i)" severity="danger" [disabled]="searchGroups.length === 1" />
+            </div>
+          </div>
 
-            <div formArrayName="searchKeywords" class="mb-2">
-              <div
-                *ngFor="
+          <div formArrayName="searchKeywords" class="mb-2">
+            <div *ngFor="
                   let keyword of getSearchGroupKeywords(i).controls;
                   let j = index
-                "
-                [formGroupName]="j"
-                class="flex align-items-center mb-1"
-              >
-                <div class="flex-grow-1">
-                  <input
-                    pInputText
-                    formControlName="keyword"
-                    type="text"
-                    placeholder="Enter keyword"
-                    class="p-inputtext-sm w-full"
-                  />
-                </div>
-                <div class="ml-1">
-                  <p-button
-                    icon="pi pi-trash"
-                    pTooltip="Remove keyword"
-                    tooltipPosition="top"
-                    [rounded]="true"
-                    [text]="true"
-                    severity="danger"
-                    [disabled]="getSearchGroupKeywords(i).length === 1"
-                    (onClick)="removeSearchKeyword(i, j)"
-                  />
-                </div>
+                " [formGroupName]="j" class="flex align-items-center mb-1">
+              <div class="flex-grow-1">
+                <input pInputText formControlName="keyword" type="text" placeholder="Enter keyword"
+                  class="p-inputtext-sm w-full" />
+              </div>
+              <div class="ml-1">
+                <p-button icon="pi pi-trash" pTooltip="Remove keyword" tooltipPosition="top" [rounded]="true"
+                  [text]="true" severity="danger" [disabled]="getSearchGroupKeywords(i).length === 1"
+                  (onClick)="removeSearchKeyword(i, j)" />
               </div>
             </div>
-
-            <p-button
-              icon="pi pi-plus-circle"
-              [rounded]="true"
-              [text]="true"
-              (onClick)="addSearchKeyword(i)"
-            />
-          </p-fieldset>
-          <div class="m-3">
-            <p-tag
-              severity="secondary"
-              *ngIf="searchGroup.get('groupComparisonLogicalOperator')?.value"
-              [value]="searchGroup.get('groupComparisonLogicalOperator')?.value"
-            />
           </div>
+
+          <p-button icon="pi pi-plus-circle" [rounded]="true" [text]="true" (onClick)="addSearchKeyword(i)" />
+        </p-fieldset>
+        <div class="m-3 flex justify-content-center">
+          <p-tag severity="secondary" *ngIf="searchGroup.get('groupComparisonLogicalOperator')?.value"
+            [value]="searchGroup.get('groupComparisonLogicalOperator')?.value" />
         </div>
       </div>
-      <div class="flex">
-        <p-button
-          icon="pi pi-plus-circle"
-          class="mr-1"
-          label="AND"
-          [rounded]="true"
-          [text]="true"
-          (onClick)="addSearchGroup('AND')"
-        />
-        <p-button
-          icon="pi pi-plus-circle"
-          class="mr-1"
-          label="OR"
-          [rounded]="true"
-          [text]="true"
-          (onClick)="addSearchGroup('OR')"
-        />
-      </div>
-      <div class="flex justify-content-center mx-4 mt-4">
-        <button
-          pButton
-          type="submit"
-          rounded="true"
-          [disabled]="advancedSearchForm.invalid"
-        >
-          Search
-        </button>
-      </div>
-    </form>
-  </p-panel>
-</div>
+    </div>
+    <div class="flex">
+      <p-button icon="pi pi-plus-circle" class="mr-1" label="AND" [rounded]="true" [text]="true"
+        (onClick)="addSearchGroup('AND')" />
+      <p-button icon="pi pi-plus-circle" class="mr-1" label="OR" [rounded]="true" [text]="true"
+        (onClick)="addSearchGroup('OR')" />
+    </div>
+    <div class="flex justify-content-center mx-4 mt-2">
+      <button class="flex justify-content-center w-5 font-bold" pButton type="submit" rounded="true"
+        [disabled]="advancedSearchForm.invalid">
+        Search
+      </button>
+    </div>
+  </form>
+</p-dialog>
