@@ -1,8 +1,9 @@
 # MiniCypris
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.4.
+A dashboard for research papers fetched from the https://core.ac.uk/ API.
 
 ## Prerequisites
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.4.
+
 
 Before running the project, ensure you have the following installed:
 - [Node.js](https://nodejs.org/) (version 16 or higher recommended)
