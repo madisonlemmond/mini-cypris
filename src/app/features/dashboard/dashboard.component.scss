@@ -22,6 +22,15 @@
   }
 }
 
+.search-results-data-container {
+  width: 30%;
+  margin-bottom: 1rem;
+
+  @media screen and (max-width: 992px) {
+    width: 90%;
+  }
+}
+
 .search-results-and-data {
   margin-top: 1rem;
   @media screen and (max-width: 992px) {

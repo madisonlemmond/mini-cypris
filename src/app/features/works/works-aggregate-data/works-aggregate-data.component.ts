@@ -4,7 +4,7 @@ import { WorksSearchResults } from '../works-search/models/response/works-search
 @Component({
   selector: 'app-works-aggregate-data',
   templateUrl: './works-aggregate-data.component.html',
-  styleUrl: './works-aggregate-data.component.scss'
+  styleUrl: './works-aggregate-data.component.scss',
 })
 export class WorksAggregateDataComponent {
   @Input()
@@ -21,11 +21,12 @@ export class WorksAggregateDataComponent {
   ngOnInit() {
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
-    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+    const textColorSecondary = documentStyle.getPropertyValue(
+      '--text-color-secondary'
+    );
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
     this.pieChartOptions = {
-      responsive: true,
       plugins: {
         legend: {
           position: 'top',
@@ -35,48 +36,54 @@ export class WorksAggregateDataComponent {
           text: 'Document Type',
         },
       },
-    }
-  
+      responsive: true,
+      maintainAspectRation: true,
+    };
+
     this.barChartOptions = {
       plugins: {
         legend: {
-            labels: {
-                color: textColor
-            }
+          labels: {
+            color: textColor,
+          },
         },
       },
       scales: {
-          y: {
-              beginAtZero: true,
-              ticks: {
-                  color: textColorSecondary
-              },
-              grid: {
-                  color: surfaceBorder,
-                  drawBorder: false
-              }
+        y: {
+          beginAtZero: true,
+          ticks: {
+            color: textColorSecondary,
           },
-          x: {
-              ticks: {
-                  color: textColorSecondary
-              },
-              grid: {
-                  color: surfaceBorder,
-                  drawBorder: false
-              }
-          }
-      }
+          grid: {
+            color: surfaceBorder,
+            drawBorder: false,
+          },
+        },
+        x: {
+          ticks: {
+            color: textColorSecondary,
+          },
+          grid: {
+            color: surfaceBorder,
+            drawBorder: false,
+          },
+        },
+      },
+      responsive: true,
+      maintainAspectRatio: true,
     };
   }
 
-  ngOnChanges () {
+  ngOnChanges() {
     this.getPieChartData();
     this.getBarChartData();
   }
 
   getPieChartData() {
-    this.documentTypes = this.worksSearchResults.map(result => {
-      return result.documentType ? this.capitalizeFirstLetter(result.documentType) : 'Unknown';
+    this.documentTypes = this.worksSearchResults.map((result) => {
+      return result.documentType
+        ? this.capitalizeFirstLetter(result.documentType)
+        : 'Unknown';
     });
     const uniqueDocumentTypes = [...new Set(this.documentTypes)];
 
@@ -84,20 +91,29 @@ export class WorksAggregateDataComponent {
       labels: uniqueDocumentTypes,
       datasets: [
         {
-          data: uniqueDocumentTypes.map(type => this.documentTypes.filter(docType => docType === type).length),
+          data: uniqueDocumentTypes.map(
+            (type) =>
+              this.documentTypes.filter((docType) => docType === type).length
+          ),
           backgroundColor: ['#7982B9', '#A5C1DC', '#E9F6FA'],
-        }
-      ]
-    }
+        },
+      ],
+    };
   }
 
   getBarChartData() {
     const validYears = this.worksSearchResults
-    .map(result => result.yearPublished || (result.publishedDate ? result.publishedDate.getFullYear() : null))
-    .filter((year): year is number => typeof year === 'number');
+      .map(
+        (result) =>
+          result.yearPublished ||
+          (result.publishedDate ? result.publishedDate.getFullYear() : null)
+      )
+      .filter((year): year is number => typeof year === 'number');
 
     const uniqueYears = [...new Set(validYears)].sort((a, b) => a - b);
-    const yearCounts = uniqueYears.map(year => validYears.filter(y => y === year).length);
+    const yearCounts = uniqueYears.map(
+      (year) => validYears.filter((y) => y === year).length
+    );
 
     this.barChartData = {
       labels: uniqueYears,
@@ -105,9 +121,15 @@ export class WorksAggregateDataComponent {
         {
           label: 'Publications by Year',
           data: yearCounts,
-          backgroundColor: ['#B19CD7', '#C0AFE2', '#CEC2EB', '#DDD5F3', '#EBE8FC'],
-        }
-      ]
+          backgroundColor: [
+            '#B19CD7',
+            '#C0AFE2',
+            '#CEC2EB',
+            '#DDD5F3',
+            '#EBE8FC',
+          ],
+        },
+      ],
     };
   }
 

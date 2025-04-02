@@ -2,8 +2,8 @@
   <div class="welcome-container">
     <h3>Welcome &#10024;</h3>
     <p>
-      Welcome to your Dashboard! Use the field below to search for research papers
-      by keywords
+      Welcome to your Dashboard! Use the field below to search for research
+      papers by keywords
     </p>
     <p>
       To get more precise results, use the Advanced Search and create specific
@@ -15,12 +15,21 @@
     <app-works-search
       (response)="onResponse($event)"
       (loading)="setWorksSearchLoading($event)"
+      (error)="onError()"
     ></app-works-search>
   </div>
 
   <div class="search-results-and-data flex gap-4">
-    <div class="search-results-data-container" *ngIf="worksSearchResponse">
-      <app-works-aggregate-data [worksSearchResults]="worksSearchResponse.results"></app-works-aggregate-data>
+    <ng-container *ngIf="worksSearchResponse?.results?.length === 0">
+      <p-messages [(value)]="noResultsMessage" [closable]="false" />
+    </ng-container>
+    <ng-container *ngIf="worksSearchError">
+      <p-messages [(value)]="errorMessage" [closable]="false" />
+    </ng-container>
+    <div class="search-results-data-container" *ngIf="worksSearchResponse && (worksSearchResponse?.results ?? []).length > 0">
+      <app-works-aggregate-data
+        [worksSearchResults]="worksSearchResponse.results"
+      ></app-works-aggregate-data>
     </div>
 
     <div class="search-results-container">

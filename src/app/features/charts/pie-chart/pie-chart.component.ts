@@ -11,5 +11,7 @@ import { ChartModule } from 'primeng/chart';
 export class PieChartComponent {
   @Input() data: any;
   @Input() options: any;
+  @Input() width: string = '100%';
+  @Input() height: string = '50vh';
 
 }
