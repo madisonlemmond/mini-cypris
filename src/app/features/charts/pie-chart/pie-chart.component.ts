@@ -12,6 +12,6 @@ export class PieChartComponent {
   @Input() data: any;
   @Input() options: any;
   @Input() width: string = '100%';
-  @Input() height: string = '50vh';
+  @Input() height: string = '30vh';
 
 }
